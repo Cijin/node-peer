@@ -1,0 +1,33 @@
+{
+  "name": "node-peer",
+  "version": "1.0.0",
+  "description": "a service to send and recieve data between two or more people",
+  "main": "index.ts",
+  "scripts": {
+    "postinstall": "git config core.hooksPath ./git-hooks",
+    "lint": "eslint . --ext .js --ext .ts",
+    "autofix": "eslint . --ext .js --ext .ts  --fix",
+    "type-check": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cijin/node-peer.git"
+  },
+  "author": "Cijin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cijin/node-peer/issues"
+  },
+  "homepage": "https://github.com/Cijin/node-peer#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.20",
+    "@typescript-eslint/eslint-plugin": "^4.12.0",
+    "@typescript-eslint/parser": "^4.12.0",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}

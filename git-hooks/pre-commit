@@ -1,0 +1,16 @@
+#!/bin/sh
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+NC="\033[0m"
+linter_exit_code=1
+staged_files=$(git diff --cached --diff-filter=d --name-only |  grep .ts$)
+./node_modules/.bin/eslint $staged_files --quiet --fix
+linter_exit_code=$?
+if [ $linter_exit_code -ne 0 ]
+then
+  echo "${RED} X Linter errors have occurred"
+  exit 1
+else
+  echo "${GREEN} ✔ Eslint did not find any errors"
+  exit 0
+fi
