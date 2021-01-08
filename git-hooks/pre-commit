@@ -5,11 +5,10 @@ NC="\033[0m"
 FILES_PATTERN='\.(ts)(\..+)?$'
 FORBIDDEN="console.log"
 
-# Saving the latest commit
-STASH_NAME="pre-commit-$(date +%s)"
-git stash save -q --keep-index $STASH_NAME
+## Saving the unstaged changes
+git stash save -q --keep-index "current wd"
 
-# Tests start here
+## Tests start here
 echo "${GREEN}Checking for Linting errors:${NC}"
 npm run lint
 echo "${GREEN}Checking for type errors:${NC}"
@@ -20,7 +19,14 @@ git diff --cached --name-only | \
   xargs grep --color --with-filename -n $FORBIDDEN &&
   echo "${RED}COMMIT REJECTED Found '$FORBIDDEN' references. Please remove them before commiting${NC}"
 
-STASHES=$(git stash list)
-if [ $STASHES == "$STASH_NAME" ]; then
-  git stash pop -q
+$RESULT=$?
+if [ $RESULT -ne 0 ]; then
+	git stash save -q "original index"
+	git stash apply -q --index stash@{1}
+	git stash drop -q; git stash drop -q 
 fi
+
+[ $RESULT -ne 0 ] && exit 1
+
+## Stage files changed or updated by tests 
+git add -u
