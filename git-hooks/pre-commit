@@ -17,8 +17,8 @@ npm run type-check
 echo "Looking for forbidden references"
 git diff --cached --name-only | \
   grep -E $FILES_PATTERN | \
-  GREP_COLOR='4;5;37;41' xargs grep --color --with-filename -n $FORBIDDEN &&
-  echo "COMMIT REJECTED Found '$FORBIDDEN' references. Please remove them before commiting"
+  xargs grep --color --with-filename -n $FORBIDDEN &&
+  echo "${RED}COMMIT REJECTED Found '$FORBIDDEN' references. Please remove them before commiting"
 
 STASHES=$(git stash list)
 if [[$STASHES == "$STASH_NAME"]]; then
