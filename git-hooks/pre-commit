@@ -10,18 +10,18 @@ STASH_NAME="pre-commit-$(data + %s)"
 git stash save -q --keep-index $STASH_NAME
 
 # Tests start here
-echo "${GREEN}Running Pre-commit hooks..."
-echo "${GREEN}Checking for Linting errors:"
+echo "Running Pre-commit hooks${GREEN}..."
+echo "Checking for Linting errors:${NC}"
 npm run lint
-echo "${GREEN}Checking for type errors:"
+echo "${GREEN}Checking for type errors:${NC}"
 npm run type-check
-echo "Looking for forbidden references${NC}"
+echo "${GREEN}Looking for forbidden references${NC}"
 git diff --cached --name-only | \
   grep -E $FILES_PATTERN | \
   xargs grep --color --with-filename -n $FORBIDDEN &&
   echo "${RED}COMMIT REJECTED Found '$FORBIDDEN' references. Please remove them before commiting${NC}"
 
 STASHES=$(git stash list)
-if [[$STASHES == "$STASH_NAME"]]; then
+if [[ $STASHES && $STASHES == "$STASH_NAME"]]; then
   git stash pop -q
 fi
