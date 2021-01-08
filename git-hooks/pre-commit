@@ -6,7 +6,7 @@ FILES_PATTERN='\.(ts)(\..+)?$'
 FORBIDDEN="console.log"
 
 # Saving the latest commit
-STASH_NAME="pre-commit-$(data + %s)"
+STASH_NAME="pre-commit-$(date +%s)"
 git stash save -q --keep-index $STASH_NAME
 
 # Tests start here
@@ -22,6 +22,6 @@ git diff --cached --name-only | \
   echo "${RED}COMMIT REJECTED Found '$FORBIDDEN' references. Please remove them before commiting${NC}"
 
 STASHES=$(git stash list)
-if [[ $STASHES && $STASHES == "$STASH_NAME"]]; then
+if [[ $STASHES == "$STASH_NAME"]]; then
   git stash pop -q
 fi
