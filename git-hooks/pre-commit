@@ -21,6 +21,6 @@ git diff --cached --name-only | \
   echo "${RED}COMMIT REJECTED Found '$FORBIDDEN' references. Please remove them before commiting${NC}"
 
 STASHES=$(git stash list)
-if [[ $STASHES == "$STASH_NAME" ]]; then
+if [ $STASHES == "$STASH_NAME" ]; then
   git stash pop -q
 fi
