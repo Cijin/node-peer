@@ -4,7 +4,7 @@
   "description": "a service to send and recieve data between two or more people",
   "main": "index.ts",
   "scripts": {
-    "postinstall": "git config core.hooksPath ./git-hooks",
+    "postinstall": "git config core.hooksPath ./Scripts",
     "lint": "eslint . --ext .js --ext .ts",
     "autofix": "eslint . --ext .js --ext .ts  --fix",
     "type-check": "tsc"
