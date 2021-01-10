@@ -28,7 +28,7 @@ jobs:
       
       - name: Check lint, types, & tests
         run: |
-          npm lint,
-          npm type-check.
+          npm run lint,
+          npm run type-check.
       #@TODO: add test script
             # code coverage script
