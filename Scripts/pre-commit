@@ -12,7 +12,6 @@ test_result=1
 test_result=$?
 
 git stash pop -q 
-echo "RESULT: $test_result"
 
 [ $test_result -ne 0 ] && exit 1
 exit 0
