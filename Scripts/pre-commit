@@ -9,6 +9,7 @@ git stash save -q --keep-index "current wd"
 ## Run script file with tests
 ./Scripts/run_tests.sh
 $RESULT=$?
+echo "RESULT: $RESULT"
 
 if [ $RESULT -ne 0 ]; then
 	git stash save -q "original index"
