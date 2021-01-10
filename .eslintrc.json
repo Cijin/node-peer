@@ -1,22 +1,18 @@
 {
   "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
+    "node": true,
+    "jest":true
   },
+  "ignorePatterns": ["!.dist"],
   "extends": [
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "plugin:jest/recommended"
   ],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 6,
     "sourceType": "module"
-  },
-  "plugins": ["@typescript-eslint"]
+  }
 }

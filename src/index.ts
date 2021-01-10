@@ -1,4 +1,3 @@
-const testPreCommitHook = () => {
-  const justToCheckIfLintingTypecheckingWork = 5
-  return justToCheckIfLintingTypecheckingWork
+export function addNums(a: number, b: number): number {
+  return a + b
 }

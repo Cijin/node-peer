@@ -1,1 +1,1 @@
-declare const testPreCommitHook: () => number;
+export declare function addNums(a: number, b: number): number;
