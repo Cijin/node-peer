@@ -7,8 +7,8 @@ NC="\033[0m"
 git stash save -q --keep-index "current wd"
 
 ## Run script file with tests
-./Scripts/run_tests.sh
-$RESULT=$?
+$RESULT = ./Scripts/run_tests.sh
+
 echo "RESULT: $RESULT"
 
 if [ $RESULT -ne 0 ]; then
