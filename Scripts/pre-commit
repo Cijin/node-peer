@@ -4,20 +4,15 @@ GREEN="\033[1;32m"
 NC="\033[0m"
 
 ## Saving the unstaged changes
-git stash save -q --keep-index "current wd"
+git stash save -q --keep-index 
 
 ## Run script file with tests
-$RESULT = ./Scripts/run_tests.sh
+$RESULT=1
+./Scripts/run_tests.sh
+$RESULT=$?
 
+git stash pop -q 
 echo "RESULT: $RESULT"
 
-if [ $RESULT -ne 0 ]; then
-	git stash save -q "original index"
-	git stash apply -q --index stash@{1}
-	git stash drop -q; git stash drop -q 
-fi
-
 [ $RESULT -ne 0 ] && exit 1
-
-## Stage files changed or updated by tests 
-git add -u
+exit 0
