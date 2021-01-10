@@ -19,5 +19,5 @@ fi
 
 [ $test_result -ne 0 ] && exit 1
 
-echo "${GREEN}✔ Successful Commit${NC}🤓🚀"
+echo "${GREEN}✔ Successful Commit${NC} 🤓 🚀"
 exit 0
