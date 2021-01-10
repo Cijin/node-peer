@@ -18,3 +18,4 @@ git diff --cached --name-only | \
   xargs grep --color --with-filename -n $FORBIDDEN &&
   echo "${RED}COMMIT REJECTED Found '$FORBIDDEN' references. Please remove them before commiting${NC}" && exit 1 
 
+exit 0
