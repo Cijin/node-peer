@@ -7,12 +7,12 @@ NC="\033[0m"
 git stash save -q --keep-index 
 
 ## Run script file with tests
-$RESULT=1
+$test_result=1
 ./Scripts/run_tests.sh
-$RESULT=$?
+$test_result=$?
 
 git stash pop -q 
-echo "RESULT: $RESULT"
+echo "RESULT: $test_result"
 
-[ $RESULT -ne 0 ] && exit 1
+[ $test_result -ne 0 ] && exit 1
 exit 0
