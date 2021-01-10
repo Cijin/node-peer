@@ -4,14 +4,19 @@ GREEN="\033[1;32m"
 NC="\033[0m"
 
 ## Saving the unstaged changes
-git stash save -q --keep-index 
+STASH_NAME="pre-commit-$(date +%s)"
+git stash save -q --keep-index $STASH_NAME
 
 ## Run script file with tests
 test_result=1
 ./Scripts/run_tests.sh
 test_result=$?
 
-git stash pop -q 
+## Restoring unstaged changes
+STASHES=$(git stash list)
+if [[ $STASHES == "$STASH_NAME"  ]]; then
+    git stash pop -q
+fi
 
 [ $test_result -ne 0 ] && exit 1
 exit 0
