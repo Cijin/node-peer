@@ -12,7 +12,7 @@ npm run lint || exit 1
 echo "${GREEN}Checking for type errors:${NC}"
 npm run type-check || exit 1
 
-echo "${GREEN}Looking for forbidden references${NC}"
+echo "${GREEN}Looking for forbidden references:${NC}"
 git diff --cached --name-only | \
   grep -E $FILES_PATTERN | \
   xargs grep --color --with-filename -n $FORBIDDEN &&
