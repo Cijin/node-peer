@@ -14,7 +14,7 @@ test_result=$?
 
 ## Restoring unstaged changes
 STASHES=$(git stash list)
-if [[ $STASHES == "$STASH_NAME"  ]]; then
+if [ $STASHES == "$STASH_NAME" ]; then
     git stash pop -q
 fi
 
