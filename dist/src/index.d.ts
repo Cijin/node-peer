@@ -1,1 +1,1 @@
-declare const justToCheckIfLintingTypecheckingWork = 5;
+declare const testPreCommitHook: () => number;

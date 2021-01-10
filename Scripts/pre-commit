@@ -4,20 +4,18 @@ GREEN="\033[1;32m"
 NC="\033[0m"
 
 ## Saving the unstaged changes
-STASH_NAME="pre-commit-$(date +%s)"
-git stash save -q --keep-index $STASH_NAME
+git stash save -q --keep-index "current wd"
 
 ## Run script file with tests
 test_result=1
 ./Scripts/run_tests.sh
 test_result=$?
 
-## Restoring unstaged changes
-STASHES=$(git stash list)
-echo "STASHES: $STASHES, STASH_NAME: $STASH_NAME"
-if [ $STASHES == "$STASH_NAME" ]; then
-    git stash pop -q
+if [ $test_result -ne 0 ];then
+  git stash save -q "original index"
+  git stash apply -q --index stash@{1}
+  git stash drop -q; git stash drop -q
+  exit 1
 fi
 
-[ $test_result -ne 0 ] && exit 1
-exit 0
+git add -u

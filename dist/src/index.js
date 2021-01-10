@@ -1,3 +1,5 @@
-const justToCheckIfLintingTypecheckingWork = 5;
-console.log(justToCheckIfLintingTypecheckingWork);
+const testPreCommitHook = () => {
+    const justToCheckIfLintingTypecheckingWork = 5;
+    return justToCheckIfLintingTypecheckingWork;
+};
 //# sourceMappingURL=index.js.map
