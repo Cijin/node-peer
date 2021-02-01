@@ -3,7 +3,7 @@ import * as http from 'http'
 import * as log4js from 'log4js'
 import * as yargs from 'yargs'
 
-// import pipingServer module here
+import * as pipe from './pipe'
 
 // parser options
 const parser = yargs.option('http-port', {
@@ -19,9 +19,9 @@ const httpPort: number = args['http-port']
 const logger = log4js.getLogger()
 logger.level = 'info'
 
-// create a pipingServer and pass it to http server
+const pipeServer = new pipe.Server({ logger })
 
-http.createServer().listen(httpPort, () => {
+http.createServer(pipeServer.generateHandler(false)).listen(httpPort, () => {
   logger.info(`Http Server listening on Port: ${httpPort}`)
 })
 
