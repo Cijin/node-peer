@@ -1,4 +1,5 @@
 module.exports = {
   verbose: true,
-  modulePathIgnorePatterns: ['dist']
+  modulePathIgnorePatterns: ['dist', 'node_modules/'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
 }
