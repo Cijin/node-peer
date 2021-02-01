@@ -12,6 +12,9 @@ npm run lint || exit 1
 echo "${GREEN}Checking for type errors:${NC}"
 npm run type-check || exit 1
 
+echo "${GREEN}Running Tests:${NC}"
+npm run test || exit 1
+
 echo "${GREEN}Looking for forbidden references:${NC}"
 git diff --cached --name-only | \
   grep -E $FILES_PATTERN | \
