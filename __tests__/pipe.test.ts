@@ -78,4 +78,20 @@ describe('pipe.Server', () => {
       expect(res2.headers['content-type']).toStrictEqual('text/html')
     })
   })
+
+  test('should handle a connection (reciever: 0, sender: 0)', async () => {
+    const reqPromise = thenRequest('GET', `${pipeURL}/mydataid`)
+
+    await thenRequest('POST', `${pipeURL}/mydataid`, {
+      body: 'this is test content'
+    })
+
+    const data = await reqPromise
+
+    expect(data.getBody('UTF-8')).toStrictEqual('this is test content')
+    expect(data.headers['content-length']).toStrictEqual(
+      'this is test content'.length.toString()
+    )
+    expect(data.headers['content-type']).toStrictEqual(undefined)
+  })
 })
