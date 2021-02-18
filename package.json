@@ -10,7 +10,8 @@
     "lint": "eslint . --ext .js --ext .ts",
     "autofix": "eslint . --ext .js --ext .ts  --fix",
     "type-check": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "repository": {
     "type": "git",
