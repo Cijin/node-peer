@@ -4,6 +4,7 @@ import * as http from 'http'
 import * as log4js from 'log4js'
 import thenRequest from 'then-request'
 import * as pipe from '../src/pipe'
+import * as request from 'request'
 
 /**
  * listen on specified port
@@ -27,9 +28,9 @@ function serverClosePromise(server: http.Server): Promise<void> {
 }
 
 // Sleep
-//function sleep(ms: number): Promise<any> {
-//  return new Promise((resolve) => setTimeout(resolve, ms))
-//}
+function sleep(ms: number): Promise<any> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
 
 // logger
 const logger = log4js.getLogger()
@@ -215,5 +216,78 @@ describe('pipe.Server', () => {
     expect(data3.headers['content-length']).toStrictEqual(
       'this is content for all 3'.length.toString()
     )
+  })
+
+  test('should fail if sender and reciever, recievers count do not match', async () => {
+    const sendReq = http.request({
+      host: 'localhost',
+      port,
+      method: 'POST',
+      path: '/mydataid?n=2'
+    })
+
+    sendReq.setHeader('Content-Length', 'this is some content'.length)
+    sendReq.end('this is some content')
+
+    const data1 = await thenRequest('GET', `${pipeURL}/mydataid?n=3`)
+
+    expect(data1.statusCode).toStrictEqual(400)
+    expect(data1.headers['access-control-allow-origin']).toStrictEqual('*')
+
+    sendReq.abort()
+  })
+
+  test('should fail POST requests with invalid value of n', async () => {
+    const res = await thenRequest('POST', `${pipeURL}/mydataid?n=test`, {
+      body: 'this is some content'
+    })
+
+    expect(res.statusCode).toStrictEqual(400)
+    expect(res.headers['access-control-allow-origin']).toStrictEqual('*')
+  })
+
+  test('should fail GET requests with invalid value of n', async () => {
+    const res = await thenRequest('GET', `${pipeURL}/mydataid?n=test`)
+
+    expect(res.statusCode).toStrictEqual(400)
+    expect(res.headers['access-control-allow-origin']).toStrictEqual('*')
+  })
+
+  test('should unregister a sender before establishing connection', async () => {
+    const sendReq1 = request.post({
+      url: `${pipeURL}/mydataid`,
+      body: 'test data'
+    })
+
+    sendReq1.abort()
+
+    const sendPromise1 = thenRequest('POST', `${pipeURL}/mydataid`, {
+      body: 'test data 2'
+    })
+
+    const get1 = await thenRequest('GET', `${pipeURL}/mydataid`)
+    const sendData = await sendPromise1
+
+    expect(sendData.statusCode).toStrictEqual(200)
+    expect(get1.statusCode).toStrictEqual(200)
+    expect(get1.getBody('UTF-8')).toStrictEqual('test data 2')
+  })
+
+  test('should unregister a reciever before establishing connection', async () => {
+    const getReq1 = request.post({
+      url: `${pipeURL}/mydataid`
+    })
+
+    getReq1.abort()
+
+    const getPromise2 = thenRequest('GET', `${pipeURL}/mydataid`)
+    const sendData = await thenRequest('POST', `${pipeURL}/mydataid`, {
+      body: 'test data'
+    })
+
+    expect(sendData.statusCode).toStrictEqual(200)
+
+    const get2 = await getPromise2
+    expect(get2.statusCode).toStrictEqual(200)
   })
 })

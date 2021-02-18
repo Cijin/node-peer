@@ -99,7 +99,6 @@ export class Server {
 
             default:
               // handle a reciever
-
               this.handleReciever(req, res, reqUrl)
               break
           }
@@ -310,7 +309,7 @@ export class Server {
     const reqPath = reqUrl.pathname
     const totalRecievers = Server.getTotalRecievers(reqUrl)
 
-    if (!totalRecievers) {
+    if (Number.isNaN(totalRecievers)) {
       res.writeHead(400, {
         'Access-Control-Allow-Origin': '*'
       })
@@ -408,7 +407,7 @@ export class Server {
 
     const totalRecievers = Server.getTotalRecievers(reqURL)
 
-    if (totalRecievers <= 0) {
+    if (Number.isNaN(totalRecievers)) {
       res.writeHead(400, {
         'Access-Control-Allow-Origin': '*'
       })
